@@ -1,0 +1,6 @@
+<launch>
+    <!-- Sets up Gamepad + Motor + DLP -->
+    <include ns="drive" file="$(find d3_gamepad)/launch/gamepad.launch"/>
+    <include ns="drive" file="$(find d3_motorctl)/launch/motor.launch"/>
+    <include ns="drive" file="$(find ros-noetic-dlp-demo)/launch/dlp.launch"/>
+</launch>
