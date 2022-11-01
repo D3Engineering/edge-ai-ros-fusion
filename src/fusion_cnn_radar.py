@@ -13,7 +13,7 @@ from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 from sensor_msgs.msg import CameraInfo
 from sensor_msgs.msg import PointCloud2
-from ti_mmwave_rospkg.msg import RadarTrack
+from ti_mmwave_rospkg.msg import RadarTrackArray
 from common_msgs.msg import Detection2D
 import sensor_msgs.point_cloud2 as pc2
 #from icecream import ic # python3 -m pip install icecream
@@ -70,7 +70,7 @@ def draw_result(img, K, cnn_data, radar_data):
 		# Transform points from the radar to the camera's coordinate system
 		# Hard coding a y translation of +28mm to test
 		radar_to_camera_tf = np.eye(4)
-		radar_to_camera_tf[1,3] = 0.028 # Disable this to visualize without correction
+		radar_to_camera_tf[1,3] = -0.028 # Disable this to visualize without correction
 
 		# Note the transpose to convert from row vector to column vector for numpy broadcasting
 		pt_3d_tf = radar_to_camera_tf @ pt_3d.T
@@ -185,17 +185,22 @@ def processImage(msg):
 		print("Caught exception: %s" % str(err))
 
 
-def pcl_callback(data):
+def radar_callback(data):
 	global latest_radar_data
 
-	# Filter out all points farther than some distance
-	# Using ROS coordinate conventions, X is forward and back- a.k.a. depth
-	if data.posx > MAX_DEPTH:
-		return
+	#print("Num tracks: %i" % data.num_tracks)
 
-	# Due to radar framerate being potentially higher than the camera, use a dict to store the latest tracker result for each track
-	# This data will get cleared after receiving and processing an image
-	latest_radar_data[data.tid] = (data, rospy.get_rostime())
+	for track_idx in range(data.num_tracks):
+		track = data.track[track_idx]
+
+		# Filter out all points farther than some distance
+		# Using ROS coordinate conventions, X is forward and back- a.k.a. depth
+		if track.posx > MAX_DEPTH:
+			return
+
+		# Due to radar framerate being potentially higher than the camera, use a dict to store the latest tracker result for each track
+		# This data will get cleared after receiving and processing an image
+		latest_radar_data[track.tid] = (track, rospy.get_rostime())
 
 
 def cnn_callback(data):
@@ -235,8 +240,7 @@ def start_node():
 
 
 	# Setup subscriber for the radar data
-	#rospy.Subscriber("/ti_mmwave/radar_scan_pcl_1", PointCloud2, pcl_callback)
-	rospy.Subscriber("/ti_mmwave/radar_track", RadarTrack, pcl_callback)
+	rospy.Subscriber("/ti_mmwave/radar_trackarray", RadarTrackArray, radar_callback)
 	global latest_radar_data
 	# latest_radar_data is a dict and accumulates all of the tracked returns between image frames
 	latest_radar_data = {}
