@@ -15,7 +15,6 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   ti_mmwave_rospkg
-  gscam
   ti_viz_nodes
 )
 
