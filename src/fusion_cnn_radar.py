@@ -240,7 +240,9 @@ def start_node():
 
 
 	# Setup subscriber for the radar data
-	rospy.Subscriber("/ti_mmwave/radar_trackarray", RadarTrackArray, radar_callback)
+	radar_name = rospy.get_param("~radar_name", "/ti_mmwave")
+	radar_topic = "/{}/radar_trackarray".format(radar_name)
+	rospy.Subscriber(radar_topic, RadarTrackArray, radar_callback)
 	global latest_radar_data
 	# latest_radar_data is a dict and accumulates all of the tracked returns between image frames
 	latest_radar_data = {}

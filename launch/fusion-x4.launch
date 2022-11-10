@@ -1,0 +1,72 @@
+<!-- XML -->
+<launch>
+    <!-- CAMERA PARAMETERS -->
+    <arg name="width" default="960"/>
+    <arg name="height" default="540"/>
+
+    <!-- framerate (integer): inactive, 30 FPS (default, max) -->
+    <!-- Can be enabled by e.g., adding videorate before tiovxdlcolorconvert, but it creases A72 loading -->
+    <arg name="framerate" default="10"/>
+
+    <!-- LDC binary file -->
+    <arg name="ldc_dcc_file" default="/opt/imaging/imx390/robotcam3_equidistant_960x540_LUT.bin"/>
+
+    <!-- camera_info URL: replace with camera_info from camera calibration -->
+    <arg name="camera_info_url" default="file:///opt/imaging/imx390/robotcam3_equidistant_960x540_rect.yml"/>
+
+    <!-- Note: ldc_dcc_file & camera_info_url should be unique to each camera - but for now we are just using one calibration -->
+    <include ns="front" file="$(find d3_fusion)/launch/imx390.launch">
+        <arg name="device" value="/dev/imx390-0-3"/>
+        <arg name="ldc_dcc_file" value="$(arg ldc_dcc_file)"/>
+        <arg name="camera_info_url" value="$(arg camera_info_url)"/>
+        <arg name="height" value="$(arg height)"/>
+        <arg name="width" value="$(arg width)"/>
+        <arg name="framerate" value="$(arg framerate)"/>
+    </include>
+
+    <include ns="left" file="$(find d3_fusion)/launch/imx390.launch">
+        <arg name="device" value="/dev/imx390-0-2"/>
+        <arg name="ldc_dcc_file" value="$(arg ldc_dcc_file)"/>
+        <arg name="camera_info_url" value="$(arg camera_info_url)"/>
+        <arg name="height" value="$(arg height)"/>
+        <arg name="width" value="$(arg width)"/>
+        <arg name="framerate" value="$(arg framerate)"/>
+    </include>
+
+    <include ns="right" file="$(find d3_fusion)/launch/imx390.launch">
+        <arg name="device" value="/dev/imx390-0-1"/>
+        <arg name="ldc_dcc_file" value="$(arg ldc_dcc_file)"/>
+        <arg name="camera_info_url" value="$(arg camera_info_url)"/>
+        <arg name="height" value="$(arg height)"/>
+        <arg name="width" value="$(arg width)"/>
+        <arg name="framerate" value="$(arg framerate)"/>
+    </include>
+
+    <include ns="back" file="$(find d3_fusion)/launch/imx390.launch">
+        <arg name="device" value="/dev/imx390-1-2"/>
+        <arg name="ldc_dcc_file" value="$(arg ldc_dcc_file)"/>
+        <arg name="camera_info_url" value="$(arg camera_info_url)"/>
+        <arg name="height" value="$(arg height)"/>
+        <arg name="width" value="$(arg width)"/>
+        <arg name="framerate" value="$(arg framerate)"/>
+    </include>
+    <include ns="front" file="$(find d3_fusion)/launch/radar.launch">
+        <arg name="command_port" value="/dev/radar1control"/>
+        <arg name="data_port" value="/dev/radar1data"/>
+    </include>
+
+    <include ns="back" file="$(find d3_fusion)/launch/radar.launch">
+        <arg name="command_port" value="/dev/radar2control"/>
+        <arg name="data_port" value="/dev/radar2data"/>
+    </include>
+
+    <include ns="left" file="$(find d3_fusion)/launch/radar.launch">
+        <arg name="command_port" value="/dev/radar3control"/>
+        <arg name="data_port" value="/dev/radar3data"/>
+    </include>
+
+    <include ns="right" file="$(find d3_fusion)/launch/radar.launch">
+        <arg name="command_port" value="/dev/radar4control"/>
+        <arg name="data_port" value="/dev/radar4data"/>
+    </include>
+</launch>
