@@ -22,6 +22,8 @@ import sensor_msgs.point_cloud2 as pc2
 MAX_DEPTH = 4.0		# meters
 MIN_VELOCITY = 0.1	# m/s
 TRACK_PERSIST_TIME = rospy.Duration.from_sec(0.25) # Seconds
+CNN_PERSIST_FRAMES = 5
+IOU_THD = 0.5
 
 # See ti_viz_nodes/src/viz_objdet.h for full list of supported classes
 valid_objs = {}
@@ -108,10 +110,8 @@ def draw_result(img, K, cnn_data, radar_data):
 			vel_2d = (int(vel_2d_homog[0]/vel_2d_homog[2]), int(vel_2d_homog[1]/vel_2d_homog[2]))
 			cv2.arrowedLine(img, pt_2d, vel_2d, color=[0,0,255], thickness=2)
 
-	for bbox in cnn_data.bounding_boxes:
-		# Filter based on classes in valid_objs
-		if bbox.label_id in valid_objs.keys():
-
+	for cnn_dataframe in cnn_data:
+		for bbox in cnn_dataframe:
 			top_left = (bbox.xmin, bbox.ymin)
 			bottom_right = (bbox.xmax, bbox.ymax)
 
@@ -204,8 +204,35 @@ def radar_callback(data):
 
 
 def cnn_callback(data):
+	# latest_cnn_data is an array of CNN_PERSIST_FRAMES length
 	global latest_cnn_data
-	latest_cnn_data = data
+
+	# Filter out all objects except those in valid_objs
+	current_data = [bbox for bbox in data.bounding_boxes if bbox.label_id in valid_objs.keys()]
+
+	# Remove stale data
+	if len(latest_cnn_data) >= CNN_PERSIST_FRAMES:
+		del latest_cnn_data[-1]
+
+		# Remove bboxes with overlap > threshold
+		for current_bbox in current_data:
+			for i in range(len(latest_cnn_data)):
+				for j,old_bbox in enumerate(latest_cnn_data[i]):
+					if current_bbox.label_id == old_bbox.label_id:
+						current_bbox_size = (current_bbox.xmax-current_bbox.xmin) * \
+											(current_bbox.ymax-current_bbox.ymin)
+						xmin = max(current_bbox.xmin, old_bbox.xmin)
+						ymin = max(current_bbox.ymin, old_bbox.ymin)
+						xmax = min(current_bbox.xmax, old_bbox.xmax)
+						ymax = min(current_bbox.ymax, old_bbox.ymax)
+						intersection = max(0, xmax - xmin + 1) * max(0, ymax - ymin + 1)
+						if intersection > IOU_THD * current_bbox_size:
+							del latest_cnn_data[i][j]
+
+	latest_cnn_data.insert(0, current_data)
+
+	# Debug - show num objects that are being persisted
+	#print([len(objs) for objs in latest_cnn_data])
 
 
 def start_node():
@@ -252,7 +279,7 @@ def start_node():
 	cnn_output_topic = "{}/vision_cnn/tensor".format(camera_name)
 	rospy.Subscriber(cnn_output_topic, Detection2D, cnn_callback)
 	global latest_cnn_data
-	latest_cnn_data = None
+	latest_cnn_data = []
 
 	# Setup publisher for fused image stream
 	global imagePub
