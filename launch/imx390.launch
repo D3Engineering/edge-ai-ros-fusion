@@ -14,7 +14,8 @@
 
     <!-- framerate (integer): inactive, 30 FPS (default, max) -->
     <!-- Can be enabled by e.g., adding videorate before tiovxdlcolorconvert, but it creases A72 loading -->
-    <arg name="framerate" default="10"/>
+    <arg name="framelimit" default="false"/>
+    <arg name="framerate" default="30"/>
 
     <!-- node name -->
     <arg name="node_name" default="gscam_node"/>
@@ -38,8 +39,14 @@
         Followed by MSC plugin (tiovxmultiscaler) to resize to the output resolution.
         Note: /dev/v4l-subdev ID can change, depending on the device attached, and at reboot. -->
     <node pkg="gscam" name="gscam_node_0" type="gscam" output="screen">
-        <param name="gscam_config"
+        <param name="gscam_config" if="$(arg framelimit)"
             value="v4l2src device=$(arg device) do-timestamp=true ! videorate ! video/x-bayer, width=1936, height=1096, format=rggb12, framerate=$(arg framerate)/1 !
+            tiovxisp sink_0::device=$(arg subdev) sensor-name=SENSOR_SONY_IMX390_UB953_D3 dcc-isp-file=$(arg dcc_isp_file)
+            sink_0::dcc-2a-file=$(arg dcc_2a_file) format-msb=11 ! video/x-raw, format=NV12 !
+            tiovxldc sensor-name=SENSOR_SONY_IMX390_UB953_D3 lut-file=$(arg ldc_dcc_file) ldc-ds-factor=2 ldc-table-width=$(arg width) ldc-table-height=$(arg height) !
+            tiovxdlcolorconvert target=1 out-pool-size=4"/>
+        <param name="gscam_config" unless="$(arg framelimit)"
+            value="v4l2src device=$(arg device) do-timestamp=true ! video/x-bayer, width=1936, height=1096, format=rggb12 !
             tiovxisp sink_0::device=$(arg subdev) sensor-name=SENSOR_SONY_IMX390_UB953_D3 dcc-isp-file=$(arg dcc_isp_file)
             sink_0::dcc-2a-file=$(arg dcc_2a_file) format-msb=11 ! video/x-raw, format=NV12 !
             tiovxldc sensor-name=SENSOR_SONY_IMX390_UB953_D3 lut-file=$(arg ldc_dcc_file) ldc-ds-factor=2 ldc-table-width=$(arg width) ldc-table-height=$(arg height) !

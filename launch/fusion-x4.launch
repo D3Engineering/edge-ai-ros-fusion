@@ -7,6 +7,8 @@
     <!-- framerate (integer): inactive, 30 FPS (default, max) -->
     <!-- Can be enabled by e.g., adding videorate before tiovxdlcolorconvert, but it creases A72 loading -->
     <arg name="framerate" default="10"/>
+    <arg name="framelimit" default="true"/>
+
 
     <!-- LDC binary file -->
     <arg name="ldc_dcc_file" default="/opt/imaging/imx390/robotcam3_equidistant_960x540_LUT.bin"/>
@@ -22,6 +24,7 @@
         <arg name="height" value="$(arg height)"/>
         <arg name="width" value="$(arg width)"/>
         <arg name="framerate" value="$(arg framerate)"/>
+        <arg name="framelimit" default="$(arg framelimit)"/>
     </include>
 
     <include ns="left" file="$(find d3_fusion)/launch/imx390.launch">
@@ -31,6 +34,7 @@
         <arg name="height" value="$(arg height)"/>
         <arg name="width" value="$(arg width)"/>
         <arg name="framerate" value="$(arg framerate)"/>
+        <arg name="framelimit" default="$(arg framelimit)"/>
     </include>
 
     <include ns="right" file="$(find d3_fusion)/launch/imx390.launch">
@@ -40,6 +44,7 @@
         <arg name="height" value="$(arg height)"/>
         <arg name="width" value="$(arg width)"/>
         <arg name="framerate" value="$(arg framerate)"/>
+        <arg name="framelimit" default="$(arg framelimit)"/>
     </include>
 
     <include ns="back" file="$(find d3_fusion)/launch/imx390.launch">
@@ -49,7 +54,9 @@
         <arg name="height" value="$(arg height)"/>
         <arg name="width" value="$(arg width)"/>
         <arg name="framerate" value="$(arg framerate)"/>
+        <arg name="framelimit" default="$(arg framelimit)"/>
     </include>
+
     <include ns="front" file="$(find d3_fusion)/launch/radar.launch">
         <arg name="command_port" value="/dev/radar1control"/>
         <arg name="data_port" value="/dev/radar1data"/>
