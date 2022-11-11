@@ -13,7 +13,7 @@ from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 from sensor_msgs.msg import CameraInfo
 from sensor_msgs.msg import PointCloud2
-from ti_mmwave_rospkg.msg import RadarTrackArray
+from ti_mmwave_tracker_rospkg.msg import RadarTrackArray
 from common_msgs.msg import Detection2D
 import sensor_msgs.point_cloud2 as pc2
 #from icecream import ic # python3 -m pip install icecream

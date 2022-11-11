@@ -14,8 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   std_msgs
-  ti_mmwave_rospkg
-  ti_viz_nodes
+  ti_mmwave_tracker_rospkg
 )
 
 ## System dependencies are found with CMake's conventions

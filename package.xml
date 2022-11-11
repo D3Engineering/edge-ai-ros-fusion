@@ -55,15 +55,14 @@
   <build_depend>rospy</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_depend>std_msgs</build_depend>
-  <build_depend>ti_mmwave_rospkg</build_depend>
-  <build_depend>ti_viz_nodes</build_depend>
+  <build_depend>ti_mmwave_tracker_rospkg</build_depend>
   <build_export_depend>cv_bridge</build_export_depend>
   <build_export_depend>ros_numpy</build_export_depend>
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
   <build_export_depend>sensor_msgs</build_export_depend>
   <build_export_depend>std_msgs</build_export_depend>
-  <build_export_depend>ti_mmwave_rospkg</build_export_depend>
+  <build_export_depend>ti_mmwave_tracker_rospkg</build_export_depend>
   <build_export_depend>ti_viz_nodes</build_export_depend>
   <exec_depend>cv_bridge</exec_depend>
   <exec_depend>ros_numpy</exec_depend>
@@ -71,8 +70,7 @@
   <exec_depend>rospy</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>std_msgs</exec_depend>
-  <exec_depend>ti_mmwave_rospkg</exec_depend>
-  <exec_depend>ti_viz_nodes</exec_depend>
+  <exec_depend>ti_mmwave_tracker_rospkg</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
