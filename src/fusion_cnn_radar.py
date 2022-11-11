@@ -219,8 +219,8 @@ def start_node():
 	# Get camera name from parameter server
 	global camera_name
 	camera_name = rospy.get_param("~camera_name", "camera")
-	camera_info_topic = "/{}/camera_info".format(camera_name)
-	rospy.loginfo("Waiting on camera_info: %s" % camera_info_topic)
+	camera_info_topic = "{}/camera_info".format(camera_name)
+	rospy.loginfo("Waiting on camera_info: %s" % rospy.resolve_name(camera_info_topic))
 
 	# Wait until we have valid calibration data before starting
 	global camera_info
@@ -241,21 +241,22 @@ def start_node():
 
 	# Setup subscriber for the radar data
 	radar_name = rospy.get_param("~radar_name", "/ti_mmwave")
-	radar_topic = "/{}/radar_trackarray".format(radar_name)
+	radar_topic = "{}/radar_trackarray".format(radar_name)
+	rospy.loginfo("Subscribing to radar: %s" % rospy.resolve_name(radar_topic))
 	rospy.Subscriber(radar_topic, RadarTrackArray, radar_callback)
 	global latest_radar_data
 	# latest_radar_data is a dict and accumulates all of the tracked returns between image frames
 	latest_radar_data = {}
 
 	# Setup subscriber for CNN output
-	cnn_output_topic = "/{}/vision_cnn/tensor".format(camera_name)
+	cnn_output_topic = "{}/vision_cnn/tensor".format(camera_name)
 	rospy.Subscriber(cnn_output_topic, Detection2D, cnn_callback)
 	global latest_cnn_data
 	latest_cnn_data = None
 
 	# Setup publisher for fused image stream
 	global imagePub
-	camera_img_topic = "/{}/image_fused".format(camera_name)
+	camera_img_topic = "{}/image_fused".format(camera_name)
 	imagePub = rospy.Publisher(camera_img_topic, Image, queue_size=1)
 
 	# Setup subscriber for the raw image stream

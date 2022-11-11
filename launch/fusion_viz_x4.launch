@@ -5,29 +5,29 @@
     <arg name="height" default="540"/>
 
     <include ns="front" file="$(find d3_fusion)/launch/fusion_viz.launch">
-        <arg name="camera_name" value="/front/imx390"/>
-        <arg name="radar_name" value="/front/ti_mmwave"/>
+        <arg name="camera_name" value="imx390"/>
+        <arg name="radar_name" value="ti_mmwave"/>
         <arg name="width" value="$(arg width)"/>
         <arg name="height" value="$(arg height)"/>
     </include>
 
     <include ns="back" file="$(find d3_fusion)/launch/fusion_viz.launch">
-        <arg name="camera_name" value="/back/imx390"/>
-        <arg name="radar_name" value="/back/ti_mmwave"/>
+        <arg name="camera_name" value="imx390"/>
+        <arg name="radar_name" value="ti_mmwave"/>
         <arg name="width" value="$(arg width)"/>
         <arg name="height" value="$(arg height)"/>
     </include>
 
     <include ns="left" file="$(find d3_fusion)/launch/fusion_viz.launch">
-        <arg name="camera_name" value="/left/imx390"/>
-        <arg name="radar_name" value="/left/ti_mmwave"/>
+        <arg name="camera_name" value="imx390"/>
+        <arg name="radar_name" value="ti_mmwave"/>
         <arg name="width" value="$(arg width)"/>
         <arg name="height" value="$(arg height)"/>
     </include>
 
     <include ns="right" file="$(find d3_fusion)/launch/fusion_viz.launch">
-        <arg name="camera_name" value="/right/imx390"/>
-        <arg name="radar_name" value="/right/ti_mmwave"/>
+        <arg name="camera_name" value="imx390"/>
+        <arg name="radar_name" value="ti_mmwave"/>
         <arg name="width" value="$(arg width)"/>
         <arg name="height" value="$(arg height)"/>
     </include>

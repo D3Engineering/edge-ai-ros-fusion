@@ -16,7 +16,7 @@
         <param name="yuv420_luma_only"  value="false"/>
     </node>
 
-    <node pkg="d3_fusion" type="fusion_cnn_radar.py" name="radar_camera_fusion_node" ns="fusion1" output="screen">
+    <node pkg="d3_fusion" type="fusion_cnn_radar.py" name="radar_camera_fusion_node" output="screen">
         <param name="camera_name" value="$(arg camera_name)"/>
         <param name="radar_name" value="$(arg radar_name)"/>
         <remap from="/image_raw" to="$(arg camera_name)/image_rgb"/>
