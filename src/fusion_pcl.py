@@ -113,8 +113,8 @@ def start_node():
 	# Get camera name from parameter server
 	global camera_name
 	camera_name = rospy.get_param("~camera_name", "camera")
-	camera_info_topic = "/{}/camera_info".format(camera_name)
-	rospy.loginfo("Waiting on camera_info: %s" % camera_info_topic)
+	camera_info_topic = "{}/camera_info".format(camera_name)
+	rospy.loginfo("Waiting on camera_info: %s" % rospy.resolve_name(camera_info_topic))
 
 	# Wait until we have valid calibration data before starting
 	global camera_info
@@ -133,16 +133,22 @@ def start_node():
 	image_size = (camera_info.width, camera_info.height)
 
 	# Setup subscriber for the raw image stream
+	rospy.loginfo("Subscribing to: %s" % rospy.resolve_name("/image_raw"))
 	rospy.Subscriber("/image_raw", Image, processImage)
 
+
 	# Setup subscriber for the radar data
-	rospy.Subscriber("/ti_mmwave/radar_scan_pcl_1", PointCloud2, pcl_callback)
+	radar_name = rospy.get_param("~radar_name", "/ti_mmwave")
+	radar_topic = "{}/radar_scan_pcl".format(radar_name)
+	rospy.loginfo("Subscribing to radar: %s" % rospy.resolve_name(radar_topic))
+	rospy.Subscriber(radar_topic, PointCloud2, pcl_callback)
+
 	global latest_radar_data
 	latest_radar_data = []
 
 	# Setup publisher for undistorted image stream
 	global imagePub
-	camera_img_topic = "/{}/image_fused".format(camera_name)
+	camera_img_topic = "{}/image_fused".format(camera_name)
 	imagePub = rospy.Publisher(camera_img_topic, Image, queue_size=1)
 
 	rospy.spin()

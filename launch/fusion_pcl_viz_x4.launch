@@ -1,0 +1,35 @@
+<!-- XML -->
+<launch>
+
+    <arg name="width" default="960"/>
+    <arg name="height" default="540"/>
+
+    <include ns="front" file="$(find d3_fusion)/launch/fusion_pcl_viz.launch">
+        <arg name="camera_name" value="imx390"/>
+        <arg name="radar_name" value="ti_mmwave"/>
+        <arg name="width" value="$(arg width)"/>
+        <arg name="height" value="$(arg height)"/>
+    </include>
+
+    <include ns="back" file="$(find d3_fusion)/launch/fusion_pcl_viz.launch">
+        <arg name="camera_name" value="imx390"/>
+        <arg name="radar_name" value="ti_mmwave"/>
+        <arg name="width" value="$(arg width)"/>
+        <arg name="height" value="$(arg height)"/>
+    </include>
+
+    <include ns="left" file="$(find d3_fusion)/launch/fusion_pcl_viz.launch">
+        <arg name="camera_name" value="imx390"/>
+        <arg name="radar_name" value="ti_mmwave"/>
+        <arg name="width" value="$(arg width)"/>
+        <arg name="height" value="$(arg height)"/>
+    </include>
+
+    <include ns="right" file="$(find d3_fusion)/launch/fusion_pcl_viz.launch">
+        <arg name="camera_name" value="imx390"/>
+        <arg name="radar_name" value="ti_mmwave"/>
+        <arg name="width" value="$(arg width)"/>
+        <arg name="height" value="$(arg height)"/>
+    </include>
+</launch>
+
