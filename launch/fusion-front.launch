@@ -1,0 +1,16 @@
+<!-- XML -->
+<launch>
+    <!-- Note: ldc_dcc_file & camera_info_url should be unique to each camera - but for now we are just using one calibration -->
+    <include ns="front" file="$(find d3_fusion)/launch/fusion.launch">
+        <arg name="device"              value="/dev/imx390-0-3"/>
+        <arg name="ldc_dcc_file"        value="/opt/imaging/imx390/imx390_35244_equidistant_1280x720_LUT.bin"/>
+        <arg name="camera_info_url"     value="file:///opt/imaging/imx390/imx390_35244_equidistant_1280x720_rect.yml"/>
+        <arg name="width"               value="1280"/>
+        <arg name="height"              value="720"/>
+        <arg name="framerate"           value="30"/>
+        <arg name="framelimit"          value="false"/>
+
+        <arg name="command_port"        value="/dev/frontradarcontrol"/>
+        <arg name="data_port"           value="/dev/frontradardata"/>
+    </include>
+</launch>
