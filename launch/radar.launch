@@ -12,7 +12,7 @@
 
     <arg name="command_port" default="/dev/ttyXRUSB0"/>
     <arg name="data_port" default="/dev/ttyXRUSB1"/>
-
+    <arg name="frame_id" default="ti_mmwave"/>
     <!-- mmWave_Manager node -->
     <node pkg="ti_mmwave_tracker_rospkg" type="ti_mmwave_tracker_rospkg" name="ti_mmwave" output="screen">
         <param name="command_port" value="$(arg command_port)"  />
@@ -21,7 +21,7 @@
         <param name="data_rate" value="921600"   />
         <param name="max_allowed_elevation_angle_deg" value="$(arg max_allowed_elevation_angle_deg)"   />
         <param name="max_allowed_azimuth_angle_deg" value="$(arg max_allowed_azimuth_angle_deg)"   />
-        <param name="frame_id" value="ti_mmwave"/>
+        <param name="frame_id" value="$(arg frame_id)"/>
         <param name="mmWaveCLI_name" value="mmWaveCLI" />
 
         <!-- Way too many remaps - this is a hack to fix namespacing -->
