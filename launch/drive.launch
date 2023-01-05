@@ -1,6 +1,7 @@
+<!--Set up the gamepad + motorcontroller for controller-based driving-->
+<!--(Not related to fusion)-->
 <launch>
-    <!-- Sets up Gamepad + Motor + DLP -->
+    <!-- Sets up Gamepad + Motor-->
     <include ns="drive" file="$(find d3_gamepad)/launch/gamepad.launch"/>
-    <include ns="drive" file="$(find d3_motorctl)/launch/motor.launch"/>
-    <include ns="drive" file="$(find ros-noetic-dlp-demo)/launch/dlp.launch"/>
+    <include ns="drive" file="$(find scuttle_driver)/launch/scuttle_driver.launch"/>
 </launch>

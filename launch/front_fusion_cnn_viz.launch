@@ -1,14 +1,13 @@
-<!--Visualizer: Example file - how to easily visualize the radar+camera fusion from front_fusion.launch-->
+<!--Visualizer: Example file - how to visualize the CNN+tracker fusion from front_fusion.launch-->
 <launch>
     <arg name="width" default="1280"/>
     <arg name="height" default="720"/>
 
-    <include ns="front" file="$(find d3_fusion)/launch/fusion_pcl_viz.launch">
+    <include ns="front" file="$(find d3_fusion)/launch/fusion_viz.launch">
         <arg name="camera_name" value="imx390"/>
         <arg name="radar_name" value="ti_mmwave"/>
         <arg name="width" value="$(arg width)"/>
         <arg name="height" value="$(arg height)"/>
-        <remap from="imx390/image_fused" to="imx390/image_fused_pcl"/>
     </include>
 </launch>
 

@@ -1,4 +1,7 @@
-<!-- XML -->
+<!--Camera launch file - sets up a single imx390 + CNN for streaming-->
+<!--Designed to be included in other launch files for simplicity-->
+<!--Note a few items are important: device, width/height, framerate/framelimit-->
+<!--camera_info_url + ldc_dcc_file are both camera-specific calibration files-->
 <launch>
 
     <!-- These parameters vary per-camera -->

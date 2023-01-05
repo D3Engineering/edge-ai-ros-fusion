@@ -1,4 +1,5 @@
-<!-- XML -->
+<!--Visualizer: Runs 4x point-cloud+camera fusion visualization-->
+<!--Used in conjunction with fusion-x4.launch-->
 <launch>
 
     <arg name="width" default="960"/>

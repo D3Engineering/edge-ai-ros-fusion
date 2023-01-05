@@ -1,6 +1,6 @@
-<!-- XML -->
+<!--Visualizer: People tracker demo-->
+<!--used in conjunction with fusion.launch on the robot-->
 <launch>
-
     <arg name="width" default="960"/>
     <arg name="height" default="540"/>
     <arg name="camera_name" default="/imx390"/>

@@ -1,4 +1,6 @@
-<!-- XML -->
+<!--Visualizer: run in conjunction with fusion-x4.launch on the robot-->
+<!--Visualizes two cameras with a CNN + tracker fusion, and two cameras with image + pcl fusion-->
+<!--Used in conjunction with fusion-x4.launch-->
 <launch>
 
     <arg name="width" default="960"/>

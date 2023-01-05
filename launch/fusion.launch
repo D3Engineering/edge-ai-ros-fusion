@@ -1,4 +1,7 @@
-<!-- XML -->
+<!--Fusion launch file - starts up forward-facing IMX390 + CNN + radar-->
+<!--Used for the people-tracker or point-cloud fusion demos - in conjunction with-->
+<!--either fusion_viz.launch or fusion_pcl_viz on the visualizer PC-->
+<!--Set up to be included in other launch files as needed-->
 <launch>
     <arg name="width" default="960"/>
     <arg name="height" default="540"/>

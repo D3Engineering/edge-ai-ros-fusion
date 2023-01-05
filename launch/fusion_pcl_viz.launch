@@ -1,4 +1,6 @@
-<!-- XML -->
+<!--Visualizer: for visualizing camera+radar fusion-->
+<!--Shows the radar point-cloud overlayed on the camera stream-->
+<!--Used in conjunction with fusion.launch on the robot-->
 <launch>
 
     <arg name="width" default="960"/>

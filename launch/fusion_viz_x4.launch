@@ -1,4 +1,5 @@
-<!-- XML -->
+<!--Visualizer: 4x people-tracker demo -->
+<!--Used in conjunction with fusion-x4.launch-->
 <launch>
 
     <arg name="width" default="960"/>

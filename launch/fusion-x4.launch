@@ -1,4 +1,5 @@
-<!-- XML -->
+<!--4x-fusion script - for use on the robot-->
+<!--(Supports both people tracking & pcl fusion visualization)-->
 <launch>
     <!-- CAMERA PARAMETERS -->
     <arg name="width" default="960"/>

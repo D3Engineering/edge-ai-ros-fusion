@@ -1,9 +1,7 @@
-<!--
-  This file will launch rViz along with the mmWave sensor node and configure a TI mmWave 6843 sensor using a 3D config
- -->
-
+<!--Radar launch file - sets up a single radar-->
+<!--Note the various args for that are exposed for ease-of-configuration-->
+<!--such as frame_id, command_port/data_port-->
 <launch>
-
     <!-- Input arguments -->
     <arg name="device" value="6843" doc="TI mmWave sensor device type [1443, 1642]"/>
     <arg name="config" value="3d_Tracking" doc="TI mmWave sensor device configuration [3d_best_range_res (not supported by 1642 EVM), 2d_best_range_res]"/>
@@ -37,8 +35,4 @@
     <node pkg="ti_mmwave_tracker_rospkg" type="mmWaveQuickConfigTracker" name="ti_mmwave_config" args="$(find ti_mmwave_tracker_rospkg)/cfg/AOP_3d_Tracking.cfg" output="screen" >
         <param name="mmWaveCLI_name" value="mmWaveCommSrv/mmWaveCLI" />
     </node>
-
-    <!--
-    <node pkg="tf" type="static_transform_publisher" name="radar_baselink_1" args="5 0 0 0 0 0 ti_mmwave_pcl ti_mmwave 100"/>
-    -->
 </launch>
