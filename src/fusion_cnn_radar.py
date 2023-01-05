@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 '''
-TODO
+Camera + Radar Fusion node - Combines the CNN object identifier from
+the camera with the tracker data from the radar, then draws a box
+around the object + a velocity vector.
 '''
 
 import rospy

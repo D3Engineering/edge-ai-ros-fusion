@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 '''
-TODO
+Camera + Radar fusion node - overlays the point-cloud data
+from the radar on top of the image stream from the camera.
 '''
 
 import rospy
